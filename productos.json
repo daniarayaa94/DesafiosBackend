@@ -1,0 +1,42 @@
+[
+  {
+    "id": 2,
+    "title": "Fay",
+    "description": "123123",
+    "code": "Estas",
+    "price": 584213,
+    "status": true,
+    "stock": 4,
+    "category": "asasd"
+  },
+  {
+    "id": 3,
+    "title": "Brown",
+    "description": "123123",
+    "code": "Estas",
+    "price": 584213,
+    "status": true,
+    "stock": 4,
+    "category": "asasd"
+  },
+  {
+    "id": 4,
+    "title": "Donnelly",
+    "description": "123123",
+    "code": "Estas",
+    "price": 584213,
+    "status": true,
+    "stock": 4,
+    "category": "asasd"
+  },
+  {
+    "id": 5,
+    "title": "Buckridge",
+    "description": "123123",
+    "code": "Estas",
+    "price": 584213,
+    "status": true,
+    "stock": 4,
+    "category": "asasd"
+  }
+]

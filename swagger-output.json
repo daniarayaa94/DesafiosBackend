@@ -1,0 +1,308 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Api Carrito",
+    "description": "Rutas de api carrito entrega CoderHouse ",
+    "version": "1.0.0"
+  },
+  "host": "localhost:8080",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/carts/": {
+      "get": {
+        "tags": [
+          "Carts"
+        ],
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Carts"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Add new cart.",
+            "schema": {
+              "$ref": "#/definitions/AddCart"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/carts/{cid}": {
+      "get": {
+        "tags": [
+          "Carts"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "cid",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/products/": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Products"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Add new product.",
+            "schema": {
+              "$ref": "#/definitions/AddProduct"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/products/{pid}": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "pid",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Products"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "pid",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Update product.",
+            "schema": {
+              "$ref": "#/definitions/EditProduct"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Products"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "pid",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "AddCart": {
+      "type": "object",
+      "properties": {
+        "products": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "idp": {
+                "type": "number",
+                "example": 12
+              },
+              "quantity": {
+                "type": "number",
+                "example": 5
+              }
+            }
+          }
+        }
+      },
+      "required": [
+        "products"
+      ]
+    },
+    "AddProduct": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "example": "Nombre producto"
+        },
+        "description": {
+          "type": "string",
+          "example": "Descripción producto"
+        },
+        "code": {
+          "type": "string",
+          "example": "245841568747"
+        },
+        "price": {
+          "type": "number",
+          "example": 5300
+        },
+        "status": {
+          "type": "boolean",
+          "example": true
+        },
+        "stock": {
+          "type": "number",
+          "example": 4
+        },
+        "category": {
+          "type": "string",
+          "example": "Categoria"
+        },
+        "thumbnails": {
+          "type": "array",
+          "example": [
+            "rutas",
+            "de",
+            "archivos"
+          ],
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "EditProduct": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "example": "Nombre producto"
+        },
+        "description": {
+          "type": "string",
+          "example": "Descripción producto"
+        },
+        "code": {
+          "type": "string",
+          "example": "245841568747"
+        },
+        "price": {
+          "type": "number",
+          "example": 5300
+        },
+        "status": {
+          "type": "boolean",
+          "example": true
+        },
+        "stock": {
+          "type": "number",
+          "example": 4
+        },
+        "category": {
+          "type": "string",
+          "example": "Categoria"
+        },
+        "thumbnails": {
+          "type": "array",
+          "example": [
+            "rutas",
+            "de",
+            "archivos"
+          ],
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
