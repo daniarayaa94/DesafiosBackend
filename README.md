@@ -25,7 +25,7 @@ Esta API permite gestionar productos y carritos de compra. A continuación, se d
     "message": "Producto agregado"
   }
   ```
-![Crear Producto](./img/Captura de pantalla 2024-07-10 a la(s) 5.16.27 p. m..png)
+![Crear Producto](/img/Captura de pantalla 2024-07-10 a la(s) 5.16.27 p. m..png)
 
 ### Modificar Producto
 
