@@ -25,7 +25,7 @@ Esta API permite gestionar productos y carritos de compra. A continuación, se d
     "message": "Producto agregado"
   }
   ```
-![Crear Producto](/img/Captura de pantalla 2024-07-10 a la(s) 5.16.27 p. m..png)
+![Crear Producto](https://raw.githubusercontent.com/daniarayaa94/Entrega01/main/img/img9.png)
 
 ### Modificar Producto
 
@@ -47,7 +47,7 @@ Esta API permite gestionar productos y carritos de compra. A continuación, se d
     "message": "Producto modificado"
   }
   ```
-![Modificar Producto](./img/Captura de pantalla 2024-07-10 a la(s) 5.16.48 p. m..png)
+![Modificar Producto](https://raw.githubusercontent.com/daniarayaa94/Entrega01/main/img/img8.png)
 
 ### Obtener Productos
 
@@ -67,7 +67,7 @@ Esta API permite gestionar productos y carritos de compra. A continuación, se d
     }
   ]
   ```
-![Obtener Productos](./img/Captura de pantalla 2024-07-10 a la(s) 5.16.59 p. m..png)
+![Obtener Productos](https://raw.githubusercontent.com/daniarayaa94/Entrega01/main/img/img7.png)
 
 ### Obtener Producto por ID
 
@@ -85,7 +85,7 @@ Esta API permite gestionar productos y carritos de compra. A continuación, se d
     "category": "Categoría del producto"
   }
   ```
-![Obtener Producto por ID](./img/Captura de pantalla 2024-07-10 a la(s) 5.17.19 p. m..png)
+![Obtener Producto por ID](https://raw.githubusercontent.com/daniarayaa94/Entrega01/main/img/img6.png)
 
 ### Eliminar Producto
 
@@ -96,7 +96,7 @@ Esta API permite gestionar productos y carritos de compra. A continuación, se d
     "message": "Producto eliminado"
   }
   ```
-![Eliminar Producto](./img/Captura de pantalla 2024-07-10 a la(s) 5.17.32 p. m..png)
+![Eliminar Producto](https://raw.githubusercontent.com/daniarayaa94/Entrega01/main/img/img5.png)
 
 ## Rutas de Carritos
 
@@ -124,7 +124,7 @@ Esta API permite gestionar productos y carritos de compra. A continuación, se d
     "message": "Carrito agregado"
   }
   ```
-![Crear Carrito](./img/Captura de pantalla 2024-07-10 a la(s) 5.18.16 p. m..png)
+![Crear Carrito](https://raw.githubusercontent.com/daniarayaa94/Entrega01/main/img/img4.png)
 
 ### Obtener Carritos
 
@@ -147,7 +147,7 @@ Esta API permite gestionar productos y carritos de compra. A continuación, se d
     }
   ]
   ```
-![Obtener Carritos](./img/Captura de pantalla 2024-07-10 a la(s) 5.18.25 p. m..png)
+![Obtener Carritos](https://raw.githubusercontent.com/daniarayaa94/Entrega01/main/img/img3.png)
 
 ### Obtener Carrito por ID
 
@@ -168,7 +168,7 @@ Esta API permite gestionar productos y carritos de compra. A continuación, se d
     "id": 2
   }
   ```
-![Obtener Carrito por ID](./img/Captura de pantalla 2024-07-10 a la(s) 5.19.09 p. m..png)
+![Obtener Carrito por ID](https://raw.githubusercontent.com/daniarayaa94/Entrega01/main/img/img2.png)
 
 ### Modificar Carrito
 
@@ -179,7 +179,7 @@ Esta API permite gestionar productos y carritos de compra. A continuación, se d
     "message": "Carrito modificado"
   }
   ```
-![Modificar Carrito](./img/Captura de pantalla 2024-07-10 a la(s) 5.19.26 p. m..png)
+![Modificar Carrito](https://raw.githubusercontent.com/daniarayaa94/Entrega01/main/img/img1.png)
 
 ## Notas
 
@@ -187,6 +187,3 @@ Esta API permite gestionar productos y carritos de compra. A continuación, se d
 - La cantidad de productos en stock se actualiza automáticamente al agregarlos a un carrito.
 - Los productos se agregan de uno en uno, incrementando la cantidad si ya existen en el carrito.
 
----
-
-Este README proporciona una guía rápida para interactuar con la API de productos y carritos. Para más detalles, consulta la documentación del código.
