@@ -1,5 +1,5 @@
-const fs = require("fs")
-const ProductManager = require('../controllers/product.controller')
+import { existsSync, writeFileSync, readFileSync } from "fs"
+import ProductManager from '../controllers/product.controller.js'
 
 const managerProducts = new ProductManager('productos.json')
 
@@ -12,8 +12,8 @@ class CartManager {
     }
 
     initializeFile() {
-        if (!fs.existsSync(this.path)) {
-            fs.writeFileSync(this.path, JSON.stringify([]))
+        if (!existsSync(this.path)) {
+            writeFileSync(this.path, JSON.stringify([]))
         }
     }
 
@@ -117,14 +117,14 @@ class CartManager {
 
     getCartsFromFile() {
 
-        const data = fs.readFileSync(this.path, "utf8")
+        const data = readFileSync(this.path, "utf8")
         return JSON.parse(data)
     }
 
     saveCartsToFile(carts) {
-        fs.writeFileSync(this.path, JSON.stringify(carts, null, 2))
+        writeFileSync(this.path, JSON.stringify(carts, null, 2))
     }
 
 }
 
-module.exports =  CartManager;
+export default  CartManager;

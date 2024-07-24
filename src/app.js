@@ -1,29 +1,41 @@
-const express = require('express')
+import express, { json, urlencoded } from 'express'
+import { engine } from 'express-handlebars'
 
-const cartRouter = require('./routes/cart.router.js')
-const productRouter = require('./routes/products.router.js')
+import cartRouter from './routes/cart.router.js'
+import productRouter from './routes/products.router.js'
+import viewsRouter from './routes/views.router.js'
+import __dirname from './utils.js'
+import {Server} from 'socket.io'
 
-const swaggerUi = require('swagger-ui-express')
-const swaggerFile = require('../swagger-output.json')
 
-const path = require('path')
 const app = express()
 const PORT = 8080;
 
+const httpServer = app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`)
+})
 
-app.use(express.json()) 
-app.use(express.urlencoded({ extended: true })) 
+const socketServer = new Server(httpServer)
 
-app.use(express.static(path.join(__dirname,'public') ))
+app.use(json()) 
+app.use(urlencoded({ extended: true })) 
+app.engine('handlebars', engine())
+app.set('views', __dirname+'/views')
+app.set('view engine', 'handlebars')
+app.use(express.static(__dirname+'/public' ))
 
 app.use('/api/carts',cartRouter)
 app.use('/api/products',productRouter)
-app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile))
+app.use('/',viewsRouter)
 
-app.get('/',(req,res)=>{
-    res.sendFile(path.join(__dirname,"public","index.html"))
+
+socketServer.on('connection', socket => {
+    console.log("Nuevo cliente conectado") 
+
+    socket.on('disconnect', () => {
+      console.log('Cliente desconectado');
+    });
 })
 
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`)
-})
+app.set('socketio', socketServer);
+

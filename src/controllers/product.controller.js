@@ -1,5 +1,5 @@
-const fs = require("fs")
-const Product = require('../models/product')
+import { existsSync, writeFileSync, readFileSync } from "fs"
+import Product from '../models/product.js'
 
 class ProductManager {
 
@@ -10,8 +10,8 @@ class ProductManager {
     }
 
     initializeFile() {
-        if (!fs.existsSync(this.path)) {
-            fs.writeFileSync(this.path, JSON.stringify([]))
+        if (!existsSync(this.path)) {
+            writeFileSync(this.path, JSON.stringify([]))
         }
     }
 
@@ -67,14 +67,14 @@ class ProductManager {
 
     getProductsFromFile() {
 
-        const data = fs.readFileSync(this.path, "utf8")
+        const data = readFileSync(this.path, "utf8")
         return JSON.parse(data)
     }
 
     saveProductsToFile(products) {
-        fs.writeFileSync(this.path, JSON.stringify(products, null, 2))
+        writeFileSync(this.path, JSON.stringify(products, null, 2))
     }
 
 }
 
-module.exports = ProductManager
+export default ProductManager

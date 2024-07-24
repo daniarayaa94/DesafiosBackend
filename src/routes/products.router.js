@@ -1,8 +1,17 @@
-const express = require("express")
-const router = express.Router()
-const ProductManager = require('../controllers/product.controller')
+import { Router } from "express"
+import ProductManager from '../controllers/product.controller.js'
 
+const router = Router()
 const manager = new ProductManager('productos.json')
+
+
+const listadoProductos = (req) => {
+    let products = manager.getProducts()
+
+    const io = req.app.get('socketio');
+
+    io.emit('actualizar_productos', products);
+}
 
 // implementar limit
 router.get("/",(req,res) => {
@@ -34,13 +43,17 @@ router.put("/:pid",(req,res) => {
     */
    
     const {id, ...otrosCampos} =  req.body
-    product = manager.updateProduct(parseInt(req.params.pid), otrosCampos)
+    const product = manager.updateProduct(parseInt(req.params.pid), otrosCampos)
+
+    listadoProductos(req)
+
     res.json({message: 'Producto modificado'})
 })
 
 router.delete("/:pid",(req,res) => {
     // #swagger.tags = ['Products']
-    product = manager.deleteProduct(parseInt(req.params.pid))
+    const product = manager.deleteProduct(parseInt(req.params.pid))
+    listadoProductos(req)
     res.json({message: 'Producto eliminado'})
 })
 
@@ -58,6 +71,7 @@ router.post("/",(req,res) => {
     try{
         const newProduct = req.body
         manager.addProduct({ status:true , ...newProduct})
+        listadoProductos(req)
         res.json({message: 'Producto agregado'})
     }catch(err){
         res.status(400).send(err.message);
@@ -65,4 +79,4 @@ router.post("/",(req,res) => {
     
 })
 
-module.exports = router
+export default router

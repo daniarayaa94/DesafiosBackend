@@ -1,7 +1,7 @@
-const express = require("express")
-const router = express.Router()
-const CartManager = require("../controllers/cart.controller")
+import { Router } from "express"
+import CartManager from "../controllers/cart.controller.js"
 
+const router = Router()
 const manager = new CartManager('carrito.json')
 
 // implementar limit
@@ -37,8 +37,8 @@ router.post("/",(req,res) => {
 router.post("/:cid/product/:pid",(req,res) => {
     // #swagger.tags = ['Carts']
     /*  #swagger.parameters['body'] = {
-            in: 'body',
-            description: 'Add producto to cart cart.',
+            in: 'body',|
+            description: 'Add producto to cart.',
             schema: { $ref: '#/definitions/AddCart' }
     } */
 
@@ -51,4 +51,4 @@ router.post("/:cid/product/:pid",(req,res) => {
     }
 })
 
-module.exports = router
+export default router

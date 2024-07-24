@@ -1,0 +1,25 @@
+<table class="table" id="productos">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Nombre</th>
+      <th scope="col">Stock</th>
+      <th scope="col">Precio unitario</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    {{#each productos }}
+        <tr>
+        <th scope="row">{{this.id}}</th>
+        <td>{{this.title}}</td>
+        <td>{{this.stock}}</td>
+        <td>${{this.price}}</td>
+        </tr>
+    {{/each}}
+
+  </tbody>
+</table>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/index.js"></script>
