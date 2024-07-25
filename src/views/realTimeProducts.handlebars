@@ -1,0 +1,69 @@
+
+<div>
+    <h1>Crear productos</h1>
+    <form id="formularioProd">
+        <div class="form-group mt-2">
+            <label>Nombre*</label>
+            <input class="form-control" name="title" required id="title" type="text"/>
+        </div>
+
+        <div class="form-group mt-2">
+            <label>Descripcion*</label>
+            <input class="form-control" required name="description" id="description" type="text"/>
+        </div>
+
+        <div class="form-group mt-2">
+            <label>SKU*</label>
+            <input class="form-control" required name="code" id="code" type="text"/>
+        </div>
+
+        <div class="form-group mt-2">
+            <label>Precio*</label>
+            <input class="form-control" name="price" required id="price" type="number"/>
+        </div>
+
+        <div class="form-group mt-2">
+            <label>Stock*</label>
+            <input class="form-control" required name="stock" id="stock" type="number"/>
+        </div>
+
+        <div class="form-group mt-2">
+            <label>Categoria*</label>
+            <input class="form-control" required name="category" id="category" type="text"/>
+        </div>
+        <button  class="btn btn-success mt-2" type="button" id="guardarProd" >Guardar</button>
+    </form>
+</div>
+<br>
+<hr>
+<br>
+<h1>Listado de productos</h1>
+<br>
+<table class="table" id="productos">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Nombre</th>
+      <th scope="col">Stock</th>
+      <th scope="col">Precio unitario</th>
+      <th scope="col">Opciones</th>
+      
+    </tr>
+  </thead>
+  <tbody>
+    
+    {{#each productos }}
+        <tr>
+        <th scope="row">{{this.id}}</th>
+        <td>{{this.title}}</td>
+        <td>{{this.stock}}</td>
+        <td>${{this.price}}</td>
+        <td><button class="btn btn-danger" onclick="eliminarProd({{this.id}})">Eliminar</button></td>
+        </tr>
+    {{/each}}
+
+  </tbody>
+</table>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/index.js"></script>

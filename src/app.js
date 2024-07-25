@@ -9,7 +9,7 @@ import {Server} from 'socket.io'
 
 
 const app = express()
-const PORT = 8080;
+const PORT = 8090;
 
 const httpServer = app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
