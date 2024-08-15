@@ -1,0 +1,12 @@
+ <div class="container">
+        <div class="product-detail">
+        
+            <h2>{{product.title}}</h2>
+            <p><strong>Descripción:</strong> {{product.description}}</p>
+            <p><strong>Stock:</strong> {{product.stock}}</p>
+            <p><strong>Precio:</strong> ${{product.price}}</p>
+            <p><strong>Categoría:</strong> {{product.category}}</p>
+            <button class="btn btn-success" onclick="addToCart('{{product.id}}')" >Agregar al carrito</button>
+            <a href="/" class="btn btn-primary">Volver a la lista de productos</a>
+        </div>
+    </div>

@@ -4,26 +4,33 @@ import ProductManager from '../controllers/product.controller.js'
 const router = Router()
 const manager = new ProductManager('productos.json')
 
-
-const listadoProductos = (req) => {
-    let products = manager.getProducts()
+const listadoProductos = async (req) => {
+    let products = await manager.getProducts({page:1,limit:10})
 
     const io = req.app.get('socketio');
 
-    io.emit('actualizar_productos', products);
+    io.emit('actualizar_productos', products.docs);
 }
 
+
 // implementar limit
-router.get("/",(req,res) => {
+router.get("/", async (req,res) => {
     // #swagger.tags = ['Products']
-    let limit = parseInt(req.query.limit)
-    let products = manager.getProducts()
+    const result = await manager.getProducts(req.query);
 
-    if (!isNaN(limit) && limit > 0) {
-        products = products.slice(0, limit)
-    }
-
-    res.json(products)
+    res.send({ 
+        result: "success", 
+        payload: result.docs,
+        totalPages: result.totalPages,
+        prevPage: result.prevPage,
+        nextPage: result.nextPage,
+        page: result.page,
+        hasPrevPage: result.hasPrevPage,
+        hasNextPage: result.hasNextPage,
+        prevLink: products.prevLink = products.hasPrevPage ? `/realtimeproducts/?page=${products.prevPage}&query=${req.query.query}&limit=${req.query.limit}&order=${req.query.order}` : null,
+        nextLink: products.nextLink = products.hasNextPage ? `/realtimeproducts/?page=${products.nextPage}&query=${req.query.query}&limit=${req.query.limit}&order=${req.query.order}` : null,
+        isValid: result.docs.length > 0
+    });
 })
 
 router.get("/:pid",(req,res) => {
@@ -58,7 +65,7 @@ router.delete("/:pid",(req,res) => {
 })
 
 
-router.post("/",(req,res) => {
+router.post("/", async (req,res) => {
     /* 
         #swagger.tags = ['Products']
         #swagger.parameters['body'] = {
@@ -70,7 +77,7 @@ router.post("/",(req,res) => {
 
     try{
         const newProduct = req.body
-        manager.addProduct({ status:true , ...newProduct})
+        await manager.addProduct({ status:true , ...newProduct})
         listadoProductos(req)
         res.json({message: 'Producto agregado'})
     }catch(err){

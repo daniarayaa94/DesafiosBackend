@@ -6,40 +6,61 @@ const router = Router()
 const managerProducts = new ProductManager('productos.json')
 const managerCarts = new CartManager('carrito.json')
 
-// implementar limit
-router.get("/",(req,res) => {
-    // #swagger.tags = ['Products']
-    let limit = parseInt(req.query.limit)
-    let products = managerProducts.getProducts()
 
-    if (!isNaN(limit) && limit > 0) {
-        products = products.slice(0, limit)
-    }
+router.get("/", async (req,res) => {
+    // #swagger.tags = ['Products']
+    let products = await managerProducts.getProducts(req.query)  
+
 
     let data = {
-        productos: products
+        query: req.query.query,
+        limit: req.query.limit||5,
+        order: req.query.order,
+
+        payload: products.docs,
+        totalPayload: products.docs.lenght,
+        totalPages: products.totalPages,
+        page: products.page,
+        hasPrevPage: products.hasPrevPage,
+        hasNextPage: products.hasNextPage,
+        prevLink: products.prevLink = products.hasPrevPage ? `/?page=${products.prevPage}&query=${req.query.query||''}&limit=${req.query.limit||5}&order=${req.query.order||'price_desc'}` : null,
+        nextLink: products.nextLink = products.hasNextPage ? `/?page=${products.nextPage}&query=${req.query.query||''}&limit=${req.query.limit||5}&order=${req.query.order||'price_desc'}` : null,
+        isValid: products.docs.length > 0
     }
 
     //res.json(products)
-    res.render('home',data)
+    res.render('index',data)
 })
-// implementar limit
-router.get("/realtimeproducts",(req,res) => {
+
+router.get("/product/:id", async (req,res) => {
     // #swagger.tags = ['Products']
-    let limit = parseInt(req.query.limit)
-    let products = managerProducts.getProducts()
-
-    if (!isNaN(limit) && limit > 0) {
-        products = products.slice(0, limit)
-    }
-
-    let data = {
-        productos: products
-    }
-
+    const product = await managerProducts.getProductById(req.params.id);
     //res.json(products)
-    res.render('realTimeProducts',data)
+    
+    let data = {
+        
+        product:{
+            title: product.title,
+            stock: product.stock,
+            description: product.description,
+            price: product.price,
+            category: product.category,
+        }
+    }
+
+    res.render('detalleProd',data)
 })
+
+router.get("/cart/:id", async (req,res) => {
+    // #swagger.tags = ['Products']
+    const cart = await managerCarts.getCartWithProducts(req.params.id);
+    //res.json(products)
+    
+    
+   
+    res.render('detalleCarrito',cart)
+})
+
 
 
 export default router

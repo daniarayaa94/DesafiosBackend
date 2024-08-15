@@ -1,78 +1,79 @@
 import { existsSync, writeFileSync, readFileSync } from "fs"
-import Product from '../models/product.js'
+import ProductsModel from "../models/product.model.js"
 
 class ProductManager {
 
-    constructor(filePath) {
-        this.path = filePath
-        this.initializeFile()
-        this.nextId = this.getNextId() 
-    }
-
-    initializeFile() {
-        if (!existsSync(this.path)) {
-            writeFileSync(this.path, JSON.stringify([]))
-        }
-    }
-
-    getNextId() {
-        const products = this.getProductsFromFile()
-        if (products.length === 0) {
-            return 1
-        }
-
-        const maxId = products.reduce((max, product) => (product.id > max ? product.id : max), 0)
-        return maxId + 1
-    }
-
-    addProduct(product) {
-        const products = this.getProductsFromFile()
-        
-        const prod = new Product(this.nextId,product)
-
-        console.log(prod)
-
-        this.nextId += 1
-        products.push(prod)
-        this.saveProductsToFile(products)
-    }
-
-    getProducts() {
-        return this.getProductsFromFile()
-    }
-
-    getProductById(id) {
-        
-        const products = this.getProductsFromFile()
-        return products.find(product => product.id === id)
-    }
-
-    updateProduct(id, updatedFields) {
-        
-        const products = this.getProductsFromFile()
-        const index = products.findIndex(product => product.id == id)
     
-        if (index !== -1) {
-            products[index] = { ...products[index], ...updatedFields }
-            this.saveProductsToFile(products)
+
+    addProduct = async (product) => {
+        
+        await ProductsModel.create(product)
+    }
+
+    getProducts = async (queryParams) => {
+        let find = {};
+        let sort = {};
+        let page = parseInt(queryParams.page) || 1;
+        let limit = parseInt(queryParams.limit) || 5;
+        
+        const { query, order } = queryParams;
+
+        if (query) {
+            find.$or = [
+                { category: new RegExp(query, 'i') },
+                { stock: !isNaN(query) ? Number(query) : -1 } 
+            ];
+        }
+        
+        if (order) {
+            const [field, direction] = order.split('_');
+            sort[field] = direction === 'asc' ? 1 : -1;
+        }
+
+        const options = {
+            limit,
+            sort,
+            page,
+            lean: true
+        };
+
+        try {
+            const result = await ProductsModel.paginate(find, options);
+            
+            return result;
+        } catch (err) {
+            console.error(err)
+            res.status(500).json({ error: 'Error al traer productos', err });
         }
     }
 
-    deleteProduct(id) {
-        let products = this.getProductsFromFile()
-        products = products.filter(product => product.id !== id)
-        console.log(products)
-        this.saveProductsToFile(products)
+    async getProductById(id) {
+        try {
+            const product = await ProductsModel.findById(id);
+            return product;
+        } catch (error) {
+            console.error('Error getting product by ID:', error);
+            throw error;
+        }
     }
 
-    getProductsFromFile() {
-
-        const data = readFileSync(this.path, "utf8")
-        return JSON.parse(data)
+    async updateProduct(id, updatedFields) {
+        try {
+            const product = await ProductsModel.findByIdAndUpdate(id, updatedFields, { new: true });
+            return product;
+        } catch (error) {
+            console.error('Error updating product:', error);
+            throw error;
+        }
     }
 
-    saveProductsToFile(products) {
-        writeFileSync(this.path, JSON.stringify(products, null, 2))
+    async deleteProduct(id) {
+        try {
+            await ProductsModel.findByIdAndDelete(id);
+        } catch (error) {
+            console.error('Error deleting product:', error);
+            throw error;
+        }
     }
 
 }

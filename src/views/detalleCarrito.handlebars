@@ -1,0 +1,35 @@
+<div class="container mt-5">
+        <h1 class="mb-4">Detalle del Carrito</h1>
+        {{#if products.length}}
+            <button class="btn btn-danger btn-sm pull-right" style="margin-bottom: 10px;" onclick="removeProductsCart('{{_id}}')">Vaciar carrito</button>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Producto</th>
+                        <th scope="col">Cantidad</th>
+                        <th scope="col">Precio</th>
+                        <th scope="col">Total</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each products}}
+                        <tr>
+                            <td>{{this.product.title}}</td>
+                            <td>{{this.quantity}}</td>
+                            <td>${{this.product.price}}</td>
+                            <td>${{multiply this.quantity this.product.price}}</td>
+                            <td>
+                                <button class="btn btn-danger btn-sm" onclick="removeProduct('{{../_id}}', '{{this.product._id}}')">Eliminar</button>
+                            </td>
+                        </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+            <div class="text-right">
+                <h4>Total: ${{calculateTotal products}}</h4>
+            </div>
+        {{else}}
+            <p>No hay productos en el carrito.</p>
+        {{/if}}
+    </div>

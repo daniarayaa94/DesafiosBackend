@@ -60,7 +60,7 @@
 <br>
 
 <div class="form-inline mb-3">
-    <form method="GET" action="/realtimeproducts">
+    <form method="GET" action="/">
         
         <div class="form-group mr-2">
             <label for="query" class="mr-2">Buscar:</label>
@@ -80,8 +80,8 @@
         <div class="form-group mr-2">
             <label for="order" class="mr-2">Ordenar por:</label>
             <select id="order" name="order" class="form-control">
-                <option  {{#if (eq limit 'price_desc')}}selected{{/if}}  value="price_desc">Precio de mayor a menor</option>
-                <option  {{#if (eq limit 'price_asc')}}selected{{/if}}  value="price_asc">Precio de menor a mayor</option>
+                <option  {{#if (eq order 'price_desc')}}selected{{/if}}  value="price_desc">Precio de mayor a menor</option>
+                <option  {{#if (eq order 'price_asc')}}selected{{/if}}  value="price_asc">Precio de menor a mayor</option>
             </select>
         </div>
 
@@ -96,7 +96,8 @@
         <p>Stock: {{this.stock}}</p>
         <p>Precio unitario: ${{this.price}}</p>
         <p>Categoria: {{this.category}}</p>
-        <button class="btn btn-success" onclick="">Agregar al carrito</button>
+        <a href="/product/{{this._id}}" class="btn btn-info">Ver Detalle</a>
+        <button onclick="addToCart('{{this._id}}')" class="btn btn-success" >Agregar al carrito</button>
     </div>
     {{/each}}
 </div>
@@ -112,14 +113,21 @@
     {{/if}}
 </div>
 
-<script src="/socket.io/socket.io.js"></script>
-<script src="/js/index.js"></script>
-
-
 <script>
 
-  document.getElementById('guardarProd').addEventListener('click', function() {
+document.getElementById('guardarProd').addEventListener('click', function() {
     // Aquí puedes agregar la lógica para guardar el producto
+
+    var datos = $("#formularioProd").serialize();
+    
+    $.ajax({
+        data: datos,
+        url: 'api/products',
+        type: 'post',
+        success: function (response){
+            console.log("se envia el emit desde node")
+        }
+    });
 
     // Limpiar los campos del formulario
     document.getElementById('formularioProd').reset();
@@ -128,4 +136,5 @@
     var modal = bootstrap.Modal.getInstance(document.getElementById('productoModal'));
     modal.hide();
   });
+
 </script>
